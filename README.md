@@ -8,24 +8,32 @@ This repository contains scripts and resources to set up a Jetson Nano for camer
 - `database_utils.py`: Python script for MySQL database interactions.
 - `Images`: Diagrams and setup images.
 
-## Usage for download the basic PyQT5 interface 
-Clone this repository:
-   ```bash
-   git clone https://github.com/your-username/your-repo-name.git
+## Usage
 
-### 1. Download the basic PyQT5 interface
+### 1. Download the Basic PyQT5 Interface
 
-Clone this repository:
-   Run the setup script:
-   ```bash
-   cd your-repo-name
-   chmod +x setup_jetson.sh
-   sudo ./setup_jetson.sh
+1. Clone this repository:
+    ```bash
+    git clone https://github.com/nhat5320000/Jetson-nano.git
+    ```
 
-### 2. Usage for download Object Detection (SSD-Mobilenet)
-Clone this repository:
-   Run the setup script:
-   ```bash
-   cd your-repo-name
-   chmod +x install_jetson_inference.sh
-   sudo ./install_jetson_inference.sh
+2. Run the setup script:
+    ```bash
+    cd Jetson-nano
+    chmod +x setup_jetson.sh
+    sudo ./setup_jetson.sh
+    ```
+
+### 2. Download Object Detection (SSD-Mobilenet)
+
+1. Clone this repository:
+    ```bash
+    git clone https://github.com/nhat5320000/Jetson-nano.git
+    ```
+
+2. Run the setup script:
+    ```bash
+    cd Jetson-nano
+    chmod +x install_jetson_inference.sh
+    sudo ./install_jetson_inference.sh
+    ```
