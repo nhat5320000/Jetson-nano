@@ -13,14 +13,14 @@ Clone this repository:
    ```bash
    git clone https://github.com/your-username/your-repo-name.git
 
-1.Usage for download the basic PyQT5 interface
+### 1.Usage for download the basic PyQT5 interface
    Run the setup script:
    ```bash
    cd your-repo-name
    chmod +x setup_jetson.sh
    sudo ./setup_jetson.sh
 
-2.Usage for download Object Detection (SSD-Mobilenet)
+### 2.Usage for download Object Detection (SSD-Mobilenet)
    Run the setup script:
    ```bash
    cd your-repo-name
