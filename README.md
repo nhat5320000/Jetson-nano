@@ -12,14 +12,16 @@ This repository contains scripts and resources to set up a Jetson Nano for camer
 Clone this repository:
    ```bash
    git clone https://github.com/your-username/your-repo-name.git
-## Usage for download the basic PyQT5 interface
-Run the setup script:
+
+1.Usage for download the basic PyQT5 interface
+   Run the setup script:
    ```bash
    cd your-repo-name
    chmod +x setup_jetson.sh
    sudo ./setup_jetson.sh
-## Usage for download Object Detection (SSD-Mobilenet)
-Run the setup script:
+
+2.Usage for download Object Detection (SSD-Mobilenet)
+   Run the setup script:
    ```bash
    cd your-repo-name
    chmod +x install_jetson_inference.sh
