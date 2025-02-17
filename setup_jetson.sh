@@ -20,10 +20,6 @@ cd ..
 echo "export PATH=/usr/local/cuda/bin:\$PATH" >> ~/.bashrc
 source ~/.bashrc
 
-# Kiểm tra phiên bản CUDA
-cat /usr/local/cuda/version.txt
-nvcc --version
-
 # Cài đặt và cấu hình MySQL
 sudo apt-get install -y mysql-server
 
