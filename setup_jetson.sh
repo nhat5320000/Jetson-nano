@@ -33,7 +33,4 @@ sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_passwo
 # Tạo user và database
 sudo mysql -u root -pmysql -e "CREATE USER 'vqbg'@'localhost' IDENTIFIED BY 'vqbg123!'; GRANT ALL PRIVILEGES ON *.* TO 'vqbg'@'localhost'; CREATE DATABASE CAMERA_PAPER;"
 
-# Khởi động Qt Designer
-qtchooser -run-tool=designer -qt=5 &
-
 echo "Cài đặt hoàn tất!"
