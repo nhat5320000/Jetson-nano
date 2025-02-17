@@ -14,6 +14,7 @@ This repository contains scripts and resources to set up a Jetson Nano for camer
    git clone https://github.com/your-username/your-repo-name.git
 
 2. Run the setup script:
+   ```bash
    cd your-repo-name
    chmod +x setup_jetson.sh
    sudo ./setup_jetson.sh
