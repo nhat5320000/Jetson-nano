@@ -8,7 +8,7 @@ sudo apt-get install -y libcanberra-gtk-module libcanberra-gtk3-module
 sudo apt-get install -y v4l-utils ibus-unikey
 
 # Cài đặt các thư viện Python
-pip3 install imutils pymodbus mysql-connector-python pycuda
+pip3 install imutils pymodbus mysql-connector pycuda
 
 # Cài đặt NanoCamera
 git clone https://github.com/thehapyone/NanoCamera
