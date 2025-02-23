@@ -27,22 +27,6 @@ This repository contains scripts and resources to set up a Jetson Nano for camer
    sudo ./setup_jetson.sh
    ```
 
-
-
-**2. Download Object Detection (SSD-Mobilenet)**
-
-1. Clone this repository:
-
-   git clone [https://github.com/nhat5320000/Jetson-nano.git](https://github.com/nhat5320000/Jetson-nano.git)
-
-2.  Run the setup script:
-
-   ```bash
-   cd Jetson-nano
-   chmod +x install_jetson_inference.sh
-   sudo ./install_jetson_inference.sh
-   ```
-
 ---
 
 # Install Python 3.8 on Jetson Nano
@@ -142,17 +126,17 @@ gedit buildOpenCV.sh  # Edit OPENCV_VERSION=4.5.1
 
 ---
 
-# Helol AI World
+## Hello AI World
 
-Helol AI World is a project using NVIDIA Jetson to implement an object detection model based on SSD-Mobilenet. This project includes steps from setting up the environment, collecting data, training the model, exporting ONNX files, and performing object detection.
+**Hello AI World** is a project using NVIDIA Jetson to implement an object detection model based on SSD-Mobilenet. This project covers environment setup, data collection, model training, exporting ONNX files, and performing object detection.
 
-## 1. Clone Repository
+### 1. Clone Repository
 
 ```bash
 git clone --recursive https://github.com/dusty-nv/jetson-inference.git
 ```
 
-## 2. Installation
+### 2. Installation
 
 ```bash
 cd jetson-inference
@@ -163,14 +147,68 @@ make -j$(nproc)
 sudo make install
 ```
 
-## 3. Documentation
+### 3. Documentation
 
 - [Installation and usage guide](https://github.com/dusty-nv/jetson-inference)
 - [SSD training with PyTorch](https://github.com/dusty-nv/jetson-inference/blob/master/docs/pytorch-ssd.md)
 
+### 4. Start Training and Detection
+
+#### Enter Training Directory using Docker
+
+```bash
+cd jetson-inference
+docker/run.sh
+cd python/training/detection/ssd
+```
+
+#### Collect Data from Camera
+
+```bash
+# Capture from USB Camera
+camera-capture /dev/video0
+
+# Capture from CSI Camera
+camera-capture csi://0
+```
+
+#### Train the Model
+
+```bash
+python3 train_ssd.py --dataset-type=voc --data=data/<dataset_name> \
+                     --model-dir=models/<model_name> --batch-size=2 \
+                     --workers=1 --epochs=1
+```
+
+#### Export ONNX File
+
+```bash
+python3 onnx_export.py --model-dir=models/<model_name>
+```
+
+#### Perform Detection and Export Supplementary ONNX File
+
+```bash
+detectnet --model=models/tractors/ssd-mobilenet.onnx --labels=models/tractors/labels.txt \
+          --input-blob=input_0 --output-cvg=scores --output-bbox=boxes /dev/video0
+
+detectnet --model=models/reserve_cloth/ssd-mobilenet.onnx --labels=models/reserve_cloth/labels.txt \
+          --input-blob=input_0 --output-cvg=scores --output-bbox=boxes csi://0
+```
+
+#### Resume Training
+
+```bash
+python3 train_ssd.py --dataset-type=voc --data=data/tractors \
+                     --model-dir=models/tractors --resume=models/tractors/ssd-mobilenet.pth \
+                     --batch-size=2 --workers=1 --epochs=1
+```
+
 ## Conclusion
 
-After completing the above steps, you will have an SSD-Mobilenet model trained on customized data and capable of running on a Jetson device for real-time object detection.
+After completing these steps, you will have an SSD-Mobilenet model trained on customized data and capable of running on a Jetson device for real-time object detection.
 
-Good luck! 🚀
+**Good luck! 🚀**
+
+�
 
