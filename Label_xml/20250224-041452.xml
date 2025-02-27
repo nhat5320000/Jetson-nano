@@ -1,0 +1,27 @@
+<annotation>
+    <filename>20250224-041452.jpg</filename>
+    <folder>cloth612_3</folder>
+    <source>
+        <database>cloth612_3</database>
+        <annotation>custom</annotation>
+        <image>custom</image>
+    </source>
+    <size>
+        <width>640</width>
+        <height>480</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>OK</name>
+        <pose>unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>297</xmin>
+            <ymin>119</ymin>
+            <xmax>369</xmax>
+            <ymax>183</ymax>
+        </bndbox>
+    </object>
+</annotation>
