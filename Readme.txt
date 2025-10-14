@@ -41,6 +41,7 @@ sudo apt install v4l-utils
 v4l2-ctl --list-devices
 v4l2-ctl -d /dev/video0 --all
 
+#KO dùng#
 export PATH=/usr/local/cuda/bin:$PATH
 cat /usr/local/cuda/version.txt
 nvcc --version
