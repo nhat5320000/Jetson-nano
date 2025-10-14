@@ -1,10 +1,4 @@
-# -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'camerapaper2.ui'
-#
-# Created by: PyQt5 UI code generator 5.10.1
-#
-# WARNING! All changes made in this file will be lost!
 import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QImage
@@ -13,22 +7,21 @@ from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtCore import QThread, pyqtSignal
 import cv2, imutils
 import os
-#from cv2 import imshow
-#from threading import Thread, local
 import nanocamera as nano
-#import RPi.GPIO as R_GPIO
 import Jetson.GPIO as GPIO
 from time import sleep
 import numpy as np
+
+#ModBus
 import mysql.connector
 from mysql.connector import Error
 from pymodbus.client.sync import ModbusTcpClient
 from pymodbus.exceptions import ConnectionException
-
-
 ip_address = '192.168.4.12'
 client = ModbusTcpClient(ip_address)
+#Modbus
 
+#GPIO
 pin_out = [11,13,15,19,21,23]
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BOARD)
@@ -42,11 +35,7 @@ GPIO.setup(19,GPIO.OUT)
 GPIO.setup(21,GPIO.OUT)
 GPIO.setup(23,GPIO.OUT)
 set_data=[]
-#from pymodbus.client.sync import ModbusTcpClient
-#client = ModbusTcpClient('192.168.4.28')
-#result = client.read_holding_registers(0,1)
-# client.write_register(0,1234)
-#client.close()
+#GPIO
 
 
 class globalvar:
@@ -111,8 +100,6 @@ class camera1(QThread):
                     imgArray[x] = cv2.resize(imgArray[x],(imgArray[0].shape[1],imgArray[0].shape[0]),None,scale,scale)
                     #imgArray[x] = cv2.resize(imgArray[x], (500, 400))
                 if len(imgArray[x].shape) == 2: imgArray[x] = cv2.cvtColor(imgArray[x],cv2.COLOR_GRAY2BGR)
-
-
             hor = np.hstack(imgArray)
             ver = hor
         return ver
@@ -121,8 +108,6 @@ class camera1(QThread):
                                             database = 'CAMERA_PAPER',
                                             user ='vqbg',
                                             password='thanhtam2408V!@')
-        
-        
         mySql_Select_Table_Query=  "SELECT * FROM SETTING_DATA_2 where Model = %s"
         val_select=(int(self.runmodel),)
         cursor = connection.cursor()
@@ -133,7 +118,6 @@ class camera1(QThread):
         cursor.close()
         connection.close()
         return set_data
-
     def run(self):
         cap = nano.Camera(device_id=0,flip=0,width= 640,height= 480, fps= 30)
         while True:
@@ -141,9 +125,7 @@ class camera1(QThread):
             if cap.isReady():           
                 self.cap_out = cap.read()               
                 shapes_cap_out = np.zeros_like(self.cap_out,np.uint8)
-                for r in range(globalvar.qtycam1):
-                    #self.read_database[r,2]: upperframe ;self.read_database[r,3]: lowwer frame
-                    #self.read_database[r,4]: leftframe ;self.read_database[r,5]: right frame                 
+                for r in range(globalvar.qtycam1):                
                     cv2.rectangle(shapes_cap_out ,(globalvar.read_database[r,6],globalvar.read_database[r,4]),(globalvar.read_database[r,7],globalvar.read_database[r,5]),(255,0,0),4)
                     imgCropped= self.cap_out[globalvar.read_database[r,4]:globalvar.read_database[r,5],globalvar.read_database[r,6]:globalvar.read_database[r,7]]
                     alpha_b = (globalvar.read_database[r,29])/10
@@ -180,48 +162,28 @@ class camera1(QThread):
                     else:
                         print("hay luu anh")
                     imgstack = self.stackImages(1,([imgCropped,imgBinary],[brightness_img,contrasted_img]))
-                  
-                    # contour_up,hierarchy = cv2.findContours(imgBinary,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
-                    # contour_2,hierarchy = cv2.findContours(imgBinary_2,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
-                    # cnt_number = len(contour_up)
-                    # cnt_number_2 = len(contour_2)
-                    # sum_up = 0
-                    # area_up = 0
-                    # sum_2 = 0
-                    # area_2 = 0
-                    
-                    # for cnt_up in contour_up:
-                    #     area_up = cv2.contourArea(cnt_up)
-                    #     sum_up=sum_up+area_up
-                    #     #c_up =c_up+1
-                    # Địa chỉ IP của thiết bị
-                    #Coils (đọc/ghi): Địa chỉ từ 00001 đến 09999 (bit). Y,M,T<C,...
-                    #Discrete Inputs (chỉ đọc): Địa chỉ từ 10001 đến 19999 (bit). X
-                    #Input Registers (chỉ đọc): Địa chỉ từ 30001 đến 39999 (16-bit).Only Read D0-->
-                    #Holding Registers (đọc/ghi): Địa chỉ từ 40001 đến 49999 (16-bit). Read/WriteD0-->
-
                     
                     if (actualpixel1> globalvar.read_database[r,12]):
                         if r == 0 and client.connect():
-                            client.write_coil(8993, True)
+                            #client.write_coil(8993, True)
                             cv2.putText(shapes_cap_out ,"1ON",(globalvar.read_database[r,6],globalvar.read_database[r,4]),cv2.FONT_HERSHEY_DUPLEX,1.0,(255,255,0),2)
                         elif r==1 and client.connect():
-                            client.write_coil(8994, True)
+                            #client.write_coil(8994, True)
                             cv2.putText(shapes_cap_out ,"2ON",(globalvar.read_database[r,6],globalvar.read_database[r,4]),cv2.FONT_HERSHEY_DUPLEX,1.0,(255,255,0),2)
                         elif r==2 and client.connect():
-                            client.write_coil(8995, True)
+                            #client.write_coil(8995, True)
                             cv2.putText(shapes_cap_out ,"3ON",(globalvar.read_database[r,6],globalvar.read_database[r,4]),cv2.FONT_HERSHEY_DUPLEX,1.0,(255,255,0),2)
                         else:
                             a=1  
                     else:
                         if r == 0 and client.connect():
-                            client.write_coil(8993, False)
+                            #client.write_coil(8993, False)
                             cv2.putText(shapes_cap_out ,"1OFF",(globalvar.read_database[r,6],globalvar.read_database[r,4]),cv2.FONT_HERSHEY_DUPLEX,1.0,(0,255,0),2)
                         elif r==1 and client.connect():
-                            client.write_coil(8994, False)
+                            #client.write_coil(8994, False)
                             cv2.putText(shapes_cap_out ,"2OFF",(globalvar.read_database[r,6],globalvar.read_database[r,4]),cv2.FONT_HERSHEY_DUPLEX,1.0,(0,255,0),2)
                         elif r==2 and client.connect():
-                            client.write_coil(8995, False)
+                            #client.write_coil(8995, False)
                             cv2.putText(shapes_cap_out ,"3OFF",(globalvar.read_database[r,6],globalvar.read_database[r,4]),cv2.FONT_HERSHEY_DUPLEX,1.0,(0,255,0),2)
                         else:
                             a=0                      
